@@ -58,8 +58,9 @@ use IPC::Run qw( start pump finish timeout );
 use Getopt::Std;
 
 our $opt_e = 0;
+our $opt_n = 0;
 our $opt_v = 0;
-getopts('ev'); # only looks at options before the COMMAND
+getopts('env'); # only looks at options before the COMMAND
 
 if (! @ARGV) {
 	die "usage: chronic COMMAND...\n";
@@ -71,20 +72,23 @@ $h->finish;
 my $ret=$h->full_result;
 
 if ($ret >> 8) { # child failed
-	showout();
-	exit ($ret >> 8);
+	$ret = ($ret >> 8);
 }
 elsif ($ret != 0) { # child killed by signal
-	showout();
-	exit 1;
+	$ret = 1;
 }
 elsif ($opt_e && (length($err) > 0)) {
-	showout();
-	exit 2;
+	$ret = 2;
 }
 else {
-	exit 0;
+	$ret = 0;
 }
+
+if (($ret && ! $opt_n) || (! $ret && $opt_n)) {
+	showout();
+}
+
+exit $ret;
 
 sub showout {
 	print "STDOUT:\n" if $opt_v;
