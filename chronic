@@ -6,7 +6,7 @@ chronic - runs a command quietly unless it fails
 
 =head1 SYNOPSIS
 
-chronic [-ev] COMMAND...
+chronic [-env] COMMAND...
 
 =head1 DESCRIPTION
 
@@ -39,6 +39,11 @@ Without -e chronic needs non-zero return value to trigger output.
 In this mode, chronic's return value will be C<2> if the command's return
 value is C<0> but the command printed to stderr.
 
+=item -n
+
+Invert behaviour.  Triggers output when the return value is zero, rather than
+when it is non-zero.
+
 =back
 
 =head1 AUTHOR
@@ -47,6 +52,7 @@ Copyright 2010 by Joey Hess <id@joeyh.name>
 
 Original concept and "chronic" name by Chuck Houpt.
 Code for verbose and stderr trigger by Tomas 'Harvie' Mudrunka 2016.
+Code for inverted output by Adam Dinwoodie 2018.
 
 Licensed under the GNU GPL version 2 or higher.
 
