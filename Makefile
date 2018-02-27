@@ -31,6 +31,13 @@ install:
 	mkdir -p $(DESTDIR)$(PREFIX)/share/man/man1
 	install $(MANS) $(DESTDIR)$(PREFIX)/share/man/man1
 
+install-chronic: chronic.1
+	mkdir -p $(DESTDIR)$(PREFIX)/bin
+	install chronic $(DESTDIR)$(PREFIX)/bin
+
+	mkdir -p $(DESTDIR)$(PREFIX)/share/man/man1
+	install chronic.1 $(DESTDIR)$(PREFIX)/share/man/man1
+
 check: isutf8
 	./is_utf8/test.sh
 
