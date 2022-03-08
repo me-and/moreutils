@@ -1,3 +1,58 @@
+moreutils (0.67) unstable; urgency=medium
+
+  * README: Formalize that I am not adding new tools to moreutils,
+    and have not for a long while. This package needs someone new to
+    take over editorial responsibility.
+  * Makefile: Install man pages without executable bit.
+    Thanks, meator
+  * ifne.1: Improve example that pipes to mail to avoid escape
+    sequences.
+
+ -- Joey Hess <id@joeyh.name>  Tue, 21 Dec 2021 15:34:32 -0400
+
+moreutils (0.66) unstable; urgency=medium
+
+  * vipe: When no output is piped into vipe, and stdin is connected to
+    the terminal, don't read from stdin before opening the editor.
+    This allows eg: vipe | command
+    Thanks, Florian Pensec
+  * chronic: With -v, flush stdout after printing "STDERR" header.
+    Thanks, Adam Sjøgren
+
+ -- Joey Hess <id@joeyh.name>  Thu, 16 Sep 2021 09:12:42 -0400
+
+moreutils (0.65) unstable; urgency=medium
+
+  * vipe: Added --suffix option.
+    Thanks, Pål Grønås Drange.
+  * ifdata: fail when -ph is given but no hwaddr is available 
+    (Closes: #386755)
+    Thanks, Nicolas Schier
+
+ -- Joey Hess <id@joeyh.name>  Sat, 02 Jan 2021 12:24:51 -0400
+
+moreutils (0.64) unstable; urgency=medium
+
+  * parallel: fix typo in usage message.
+  * Makefile: Propagate compiler and linker flags when building is_utf8.
+  * ts: Fix parsing of ISO-8601 dates.
+    Thanks, David Laban.
+  * parallel: Allow compiling with uClibc-ng, which does not have getloadavg.
+    Thanks, Rosen Penev
+
+ -- Joey Hess <id@joeyh.name>  Thu, 20 Aug 2020 13:05:19 -0400
+
+moreutils (0.63) unstable; urgency=medium
+
+  * vipe: Clean up temp file even when it exits with an error.
+    Thanks, Stig Palmquist.
+  * ts: Fix ts -m %.s to not output negative microseconds.
+    Thanks, Dima Kogan
+  * sponge: Fix bug in -a mode that doubled original content of file when
+    the temp file is located on a different filesystem.
+
+ -- Joey Hess <id@joeyh.name>  Wed, 09 Jan 2019 11:14:01 -0400
+
 moreutils (0.62) unstable; urgency=medium
 
   * ts: Add -m option to use monotonic clock.

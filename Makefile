@@ -29,7 +29,11 @@ install:
 	install $(PERLSCRIPTS) $(DESTDIR)$(PREFIX)/bin
 
 	mkdir -p $(DESTDIR)$(PREFIX)/share/man/man1
-	install $(MANS) $(DESTDIR)$(PREFIX)/share/man/man1
+	install -m 644 $(MANS) $(DESTDIR)$(PREFIX)/share/man/man1
+
+uninstall:
+	for i in $(BINS) $(PERLSCRIPTS); do rm -f $(DESTDIR)$(PREFIX)/bin/$$i; done
+	for i in $(MANS); do rm -f $(DESTDIR)$(PREFIX)/share/man/man1/$$i; done
 
 install-chronic: chronic.1
 	mkdir -p $(DESTDIR)$(PREFIX)/bin

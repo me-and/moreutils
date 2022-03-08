@@ -6,7 +6,7 @@ ts - timestamp input
 
 =head1 SYNOPSIS
 
-ts [-r] [-i | -s] [format]
+ts [-r] [-i | -s] [-m] [format]
 
 =head1 DESCRIPTION
 
@@ -28,11 +28,11 @@ dates is not supported.
 If both -r and a format is passed, the existing timestamps are
 converted to the specified format.
 
-If the -i or -s switch is passed, ts timestamps incrementally instead. In case
-of -i, every timestamp will be the time elapsed since the last timestamp. In
-case of -s, the time elapsed since start of the program is used.
-The default format changes to "%H:%M:%S", and "%.S" and "%.s" can be used
-as well.
+If the -i or -s switch is passed, ts reports incremental timestamps instead of
+absolute ones. The default format changes to "%H:%M:%S", and "%.S" and "%.s" can
+be used as well. In case of -i, every timestamp will be the time elapsed since
+the last timestamp. In case of -s, the time elapsed since start of the program
+is used.
 
 The -m switch makes the system's monotonic clock be used.
 
@@ -100,7 +100,7 @@ if ($mono) {
 	my $raw_time = Time::HiRes::clock_gettime(CLOCK_MONOTONIC);
 	$lastseconds = time;
 	$lastmicroseconds = int(1000000 * ($raw_time - int($raw_time)));
-	$monodelta = time - int($raw_time);
+	$monodelta = $lastseconds - int($raw_time);
 }
 elsif ($hires) {
 	($lastseconds, $lastmicroseconds) = Time::HiRes::gettimeofday();
@@ -118,8 +118,9 @@ while (<>) {
 			my $microseconds;
 			if ($mono) {
 				my $raw_time =
-					Time::HiRes::clock_gettime(CLOCK_MONOTONIC);
-				$seconds = $monodelta + int($raw_time);
+					Time::HiRes::clock_gettime(CLOCK_MONOTONIC) +
+					$monodelta;
+				$seconds = int($raw_time);
 				$microseconds = int(1000000 * ($raw_time - $seconds));
 			}
 			else {
@@ -169,7 +170,7 @@ while (<>) {
 			|
 			\w{3}\s+\d{1,2}\s+\d\d:\d\d:\d\d # syslog form
 			|
-			\d\d\d[-:]\d\d[-:]\d\dT\d\d:\d\d:\d\d.\d+ # ISO-8601
+			\d\d\d\d[-:]\d\d[-:]\d\dT\d\d:\d\d:\d\d.\d+Z? # ISO-8601
 			|
 			(?:\w\w\w,?\s+)?	#       (optional Day)
 			\d+\s+\w\w\w\s+\d\d+\s+\d\d:\d\d:\d\d

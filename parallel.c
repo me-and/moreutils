@@ -241,7 +241,7 @@ pid_t create_pipe_child(int *fd, int orig_fd)
 	return pipe_child(fds[0], orig_fd);
 }
 
-#if defined(__CYGWIN__)
+#if defined(__CYGWIN__) || defined(__UCLIBC__)
 int getloadavg(double loadavg[], int nelem) {
 	int fd, n, elem;
 	char buf[128];
@@ -328,7 +328,7 @@ int main(int argc, char **argv) {
 	}
 	
 	if (replace_cb && argsatonce > 1) {
-		fprintf(stderr, "options -i and -n are incomaptible\n");
+		fprintf(stderr, "options -i and -n are incompatible\n");
 		exit(2);
 	}
 
